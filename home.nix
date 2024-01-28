@@ -1,0 +1,76 @@
+{ config, pkgs, inputs, lib, ... }:
+
+# let
+# 	gruvboxPlus = import ./gruvbox-plus.nix { inherit pkgs; };
+# in
+
+{	
+	home = {
+		username = "olai";
+		homeDirectory = "/home/olai";
+		stateVersion = "23.11"; # Changed from stable 23.05
+	};
+
+	# targets.genericLinux.enable = true; # ENABLE ON NON-NIXOS
+
+  imports = [
+		inputs.nix-colors.homeManagerModules.default
+    ./programs/zsh.nix
+    ./programs/neovim.nix
+		./programs/browser.nix
+		# ./programs/waybar.nix
+	  ./programs/hyprland.nix
+	  ./programs/terminal.nix
+		./programs/lf.nix
+  ];
+
+	# https://github.com/tinted-theming/base16-schemes/
+	# colorScheme = inputs.nix-colors.colorSchemes.tokyo-night-dark;
+	colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
+
+	# nixpkgs.config.allowUnfree = true;
+	# nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+	# 	"steam" # does not work idk
+	# ];
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = with pkgs; [
+		gcc
+		cmake
+
+		ripgrep
+		fd
+
+		nodejs_20
+		python311
+
+		neofetch
+		dconf
+
+		armcord # Discord client
+		webcord-vencord
+
+		# steam # Install steam in system config instead
+		protonup-qt
+		pavucontrol
+  ];
+
+	programs.git = {
+		enable = true;
+		userName = "LilleAila";
+		userEmail = "olai.solsvik@gmail.com";
+		aliases = {
+			pu = "push";
+			co = "checkout";
+			cm = "commit";
+		};
+	};
+
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  programs.home-manager.enable = true;
+}
