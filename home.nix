@@ -54,6 +54,14 @@
 		# steam # Install steam in system config instead
 		protonup-qt
 		pavucontrol
+
+		( pkgs.writeShellScriptBin "hm-rebuild" /*bash*/ ''
+		${pkgs.home-manager}/bin/home-manager switch
+		${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
+		${pkgs.hyprland}/bin/hyprctl reload
+		pkill waybar
+		${pkgs.waybar}/bin/waybar &
+		'' )
   ];
 
 	programs.git = {

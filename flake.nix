@@ -16,6 +16,9 @@
 
 		nix-colors.url = "github:misterio77/nix-colors";
 
+		nix-index-database.url = "github:Mic92/nix-index-database";
+		nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
 		# flake-parts = {
 		# 	url = "github:hercules-ci/flake-parts";
 		# 	inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -28,7 +31,7 @@
 		# };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nix-index-database, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -40,7 +43,10 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        modules = [
+					./home.nix
+					nix-index-database.hmModules.nix-index
+				];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
