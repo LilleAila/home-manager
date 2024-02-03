@@ -35,7 +35,7 @@ in
 
 				modules-left = [ "hyprland/workspaces" ];
 				modules-center = [ "clock" ];
-				modules-right = [ "battery" "tray" ];
+				modules-right = [ "battery" "tray" "custom/wlogout" ];
 
 				"hyprland/workspaces" = {
 					on-scroll-up = "hyprctl dispatch workspace e+1";
@@ -112,10 +112,15 @@ in
 					spacing = 10;
 				};
 
+				"custom/wlogout" = {
+					format = " ";
+					on-click = "wlogout";
+				};
+
 			};
 		};
 
-		style = with config.colorScheme.colors; ''
+		style = with config.colorScheme.colors; /*css*/ ''
 @define-color background #${base00};
 @define-color alt_background #${base01};
 @define-color alt2_background #${base02};
