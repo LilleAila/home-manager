@@ -15,13 +15,16 @@
 
   imports = [
 		inputs.nix-colors.homeManagerModules.default
-    ./programs/zsh.nix
-    ./programs/neovim.nix
+    ./programs/shell/zsh.nix
+    ./programs/shell/neovim.nix
+	  ./programs/shell/terminal.nix
+		./programs/shell/lf.nix
+
 		./programs/browser.nix
-		# ./programs/waybar.nix
-	  ./programs/hyprland.nix
-	  ./programs/terminal.nix
-		./programs/lf.nix
+		# ./programs/discord.nix
+
+		./programs/wallpaper/wallpaper.nix
+	  ./programs/hyprland/hyprland.nix
   ];
 
 	# https://github.com/tinted-theming/base16-schemes/
@@ -48,7 +51,6 @@
 		neofetch
 		dconf
 
-		armcord # Discord client
 		webcord-vencord
 
 		# steam # Install steam in system config instead
@@ -73,12 +75,10 @@
 			co = "checkout";
 			cm = "commit";
 		};
+		extraConfig = {
+			credential.helper = "store"; # I should probably switch to ssh
+		};
 	};
-
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
 
   programs.home-manager.enable = true;
 }
