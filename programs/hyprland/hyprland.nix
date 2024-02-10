@@ -1,11 +1,25 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
+	kittyBackground = pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
+		${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
+			background_opacity 0.0
+		'' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "start" /*bash*/''
+			sleep 1 && ${pkgs.cava}/bin/cava -p ${pkgs.writeText "cavaconf" ''
+				[general]
+				sensitivity = 25
+
+				[color]
+				foreground = "#${config.colorScheme.colors.base05}"
+			''}
+		''}/bin/start
+	'';
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
 		${inputs.hyprland.packages."${pkgs.system}".hyprland}/bin/hyprctl setcursor "Bibata-Modern-Ice" 24 &
 		${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
 		${pkgs.waybar}/bin/waybar &
 		${pkgs.mako}/bin/mako &
+		${kittyBackground}/bin/kittybg &
 		# ${pkgs.swww}/bin/swww init &
 		sleep 1
 		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
@@ -14,6 +28,8 @@ in
 
 {
   home.packages = with pkgs; [
+		( ${kittyBackground} )
+
 	  seatd
 		# wezterm
 		# kitty
@@ -158,23 +174,32 @@ in
 		systemd.enable = true;
 		xwayland.enable = true;
 
-		# plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
-		# 	# borders-plus-plus
-		# 	# hyprwinwrap
-		# 	hyprbars
-		# ];
-		#
-		# settings = {
-		# 	plugin = {
-		# 		hyprbars = {
-		# 			bar_height = 20;
-		# 			hyprbars-button = [
-		# 				"rgb(ff4040), 10, , hyprctl dispatch killactive"
-		# 				"rgb(eeee11), 10, , hyprctl dispatch killactive"
-		# 			];
-		# 		};
-		# 	};
-		# };
+		plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
+			# borders-plus-plus
+			hyprwinwrap
+			# hyprbars
+			# hyprtrails
+		];
+
+		settings = {
+			plugin = {
+				# hyprbars = {
+				# 	bar_height = 20;
+				# 	hyprbars-button = [
+				# 		"rgb(ff4040), 10, , hyprctl dispatch killactive"
+				# 		"rgb(eeee11), 10, , hyprctl dispatch killactive"
+				# 	];
+				# };
+
+				# hyprtrails = {
+				# 	color = "rgba(${config.colorScheme.colors.base04}99)";
+				# };
+
+				hyprwinwrap = {
+					class = "kitty-bg";
+				};
+			};
+		};
 
 		settings = {
 			monitor = "eDP-1,preferred,auto,1";
@@ -190,13 +215,14 @@ in
 			"$launcher" = "rofi -show drun -show-icons";
 			"$mainMod" = "SUPER";
 			# "$screenshot_format" = "%Y-%m-%d,%H:%M:%S.png";
-			"$screenshot_args" = "--notify --freeze ~/Screenshots/Raw/$(date +\"%Y-%m-%d,%H:%M:%S.png\")";
+			"$screenshot_args" = "--notify --freeze";
+			"$screenshot_path" = "~/Screenshots/Raw/$(date +\"%Y-%m-%d,%H:%M:%S.png\")";
 			bind = [
 				"$mainMod SHIFT, E, exec, wl-paste | swappy -f -"
-				"$mainMod, S, exec, grimblast copysave area $screenshot_args"
-				"$mainMod SHIFT, S, exec, grimblast copysave active $screenshot_args"
-				", PRINT, exec, grimblast copysave output $screenshot_args"
-				"SHIFT, PRINT, exec, grimblast copysave screen $screenshot_args"
+				"$mainMod, S, exec, grimblast $screenshot_args copysave area $screenshot_path"
+				"$mainMod SHIFT, S, exec, grimblast $screenshot_args copysave active $screenshot_path"
+				", PRINT, exec, grimblast $screenshot_args copysave output $screenshot_path"
+				"SHIFT, PRINT, exec, grimblast $screenshot_args copysave screen $screenshot_path"
 
 				# Apps
 				"$mainMod, return, exec, $terminal"
