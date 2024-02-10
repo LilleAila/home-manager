@@ -153,7 +153,7 @@ in
 
 	wayland.windowManager.hyprland = {
 		enable = true;
-		# package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+		package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 		# enableNvidiaPatches = true;
 		systemd.enable = true;
 		xwayland.enable = true;
@@ -176,347 +176,174 @@ in
 		# 	};
 		# };
 
-		# settings = {
-		# 	monitor = "eDP-1,preferred,auto,1";
-		# 	exec-once = ''${startupScript}/bin/start'';
-		# 	env = [
-		# 		"XCURSOR_SIZE,24"
-		# 		"GRIMBLAST_EDITOR,\"swappy -f\""
-		# 	];
-		#
-		# 	"$terminal" = "kitty";
-		# 	"$fileManager" = "dolphin";
-		# 	"$webBrowser" = "firefox";
-		# 	"$launcher" = "rofi -show drun -show-icons";
-		# 	"$mainMod" = "SUPER";
-		# 	# "$screenshot_format" = "%Y-%m-%d,%H:%M:%S.png";
-		# 	"$screenshot_args" = "--notify --freeze ~/Screenshots/Raw/$(date +\"%Y-%m-%d,%H:%M:%S.png\")";
-		# 	bind = [
-		# 		"$mainMod SHIFT, E, exec, wl-paste | swappy -f -"
-		# 		"$mainMod, S, exec, grimblast copysave area $screenshot_args"
-		# 		"$mainMod SHIFT, S, exec, grimblast copysave active $screenshot_args"
-		# 		", PRINT, exec, grimblast copysave output $screenshot_args"
-		# 		"SHIFT, PRINT, exec, grimblast copysave screen $screenshot_args"
-		#
-		# 		# Apps
-		# 		"$mainMod, return, exec, $terminal"
-		# 		"$mainMod, space, exec, $launcher"
-		# 		"$mainMod, E, exec, $fileManager"
-		# 		"$mainMod, B, exec, $webBrowser"
-		#
-		# 		# WM commands
-		# 		", XF86PowerOff, exec, pgrep -x wlogout && pkill -x wlogout || wlogout"
-		# 		"$mainMod, W, killactive,"
-		# 		"$mainMod, O, fullscreen, 0"
-		# 		"$mainMod SHIFT, O, fullscreen, 1"
-		# 		"$mainMod, F, togglefloating,"
-		# 		"$mainMod, P, pseudo,"
-		# 		"$mainMod, T, togglesplit,"
-		# 		"$mainMod, M, exit,"
-		#
-		# 		# Move focus
-		# 		"$mainMod, h, movefocus, l"
-		# 		"$mainMod, l, movefocus, r"
-		# 		"$mainMod, k, movefocus, u"
-		# 		"$mainMod, j, movefocus, d"
-		#
-		# 		# Switch workspace with $mainMod + [0-9]
-		# 		"$mainMod, 1, workspace, 1"
-		# 		"$mainMod, 2, workspace, 2"
-		# 		"$mainMod, 3, workspace, 3"
-		# 		"$mainMod, 4, workspace, 4"
-		# 		"$mainMod, 5, workspace, 5"
-		# 		"$mainMod, 6, workspace, 6"
-		# 		"$mainMod, 7, workspace, 7"
-		# 		"$mainMod, 8, workspace, 8"
-		# 		"$mainMod, 9, workspace, 9"
-		#
-		# 		# Move window to workspace with $mainMod + SHIFT + [0-9]
-		# 		"$mainMod SHIFT, 1, movetoworkspace, 1"
-		# 		"$mainMod SHIFT, 2, movetoworkspace, 2"
-		# 		"$mainMod SHIFT, 3, movetoworkspace, 3"
-		# 		"$mainMod SHIFT, 4, movetoworkspace, 4"
-		# 		"$mainMod SHIFT, 5, movetoworkspace, 5"
-		# 		"$mainMod SHIFT, 6, movetoworkspace, 6"
-		# 		"$mainMod SHIFT, 7, movetoworkspace, 7"
-		# 		"$mainMod SHIFT, 8, movetoworkspace, 8"
-		# 		"$mainMod SHIFT, 9, movetoworkspace, 9"
-		#
-		# 		# Scroll through workspaces with $mainMod + scroll
-		# 		"$mainMod, mouse_down, workspace, e+1"
-		# 		"$mainMod, mouse_up  , workspace, e-1"
-		# 	];
-		#
-		# 	# Move/resize windows with $mainMod + LMB/RMB and dragging
-		# 	bindm = [
-		# 		"$mainMod, mouse:272, movewindow"
-		# 		"$mainMod, mouse:273, resizewindow"
-		# 	];
-		#
-		# # l -> do stuff even when locked
-		# # e -> repeats when key is held 
-		# 	bindl = [
-		# 		", XF86AudioMute, exec, volumectl toggle-mute"
-		# 		", XF86AudioMicMute, exec, volumectl -m toggle-mute"
-		# 		"SHIFT, XF86AudioMute, exec, volumectl -m toggle-mute"
-		# 		", XF86AudioPlay, exec, playerctl play-pause # the stupid key is called play , but it toggles "
-		# 		", XF86AudioNext, exec, playerctl next "
-		# 		", XF86AudioPrev, exec, playerctl previous"
-		# 	];
-		#
-		# 	bindle = [
-		# 		", XF86AudioRaiseVolume, exec, volumectl -u up 10"
-		# 		", XF86AudioLowerVolume, exec, volumectl -u down 10"
-		# 		"SHIFT, XF86AudioRaiseVolume, exec, volumectl -mu up 10"
-		# 		"SHIFT, XF86AudioLowerVolume, exec, volumectl -mu down 10"
-		#
-		# 		", XF86MonBrightnessUp, exec, lightctl up 10"
-		# 		", XF86MonBrightnessDown, exec, lightctl down 10"
-		# 		", XF86Search, exec, $launcher"
-		# 	];
-		#
-		# 	input = {
-		# 		kb_layout = "no";
-		# 		follow_mouse = 1;
-		# 		touchpad = {
-		# 			natural_scroll = true;
-		# 		};
-		# 		sensitivity = 0.0;
-		# 		accel_profile = "flat";
-		# 	};
-		#
-		# 	general = {
-		# 		gaps_in = 20;
-		# 		gaps_out = 20;
-		# 		border_size = 2;
-		# 		"col.active_border" = "rgba(${config.colorScheme.colors.base04}ee) rgba(${config.colorScheme.colors.base05}ee) 45deg";
-		# 		"col.inactive_border" = "rgba(${config.colorScheme.colors.base00}aa)";
-		# 		layout = "dwindle";
-		# 		allow_tearing = "false";
-		# 	};
-		#
-		# 	decoration = {
-		# 		rounding = 10;
-		# 		blur = {
-		# 			enabled = true;
-		# 			size = 3;
-		# 			passes = 1;
-		# 			vibrancy = 0.1696;
-		# 		};
-		# 		drop_shadow = true;
-		# 		shadow_range = 4;
-		# 		shadow_render_power = 3;
-		# 		"col.shadow" = "rgba(1a1a1aee)";
-		# 	};
-		#
-		# 	animations = {
-		# 		enabled = "true";
-		# 		bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-		#
-		# 		animation = [
-		# 			"windows, 1, 7, myBezier"
-		# 			"windowsOut, 1, 7, myBezier, popin 80%"
-		# 			"border, 1, 10, default"
-		# 			"borderangle, 1, 8, default"
-		# 			"fade, 1, 7, default"
-		# 			"workspaces, 1, 6, default"
-		# 		];
-		# 	};
-		#
-		# 	dwindle = {
-		# 		pseudotile = "true";
-		# 		preserve_split = "true";
-		# 	};
-		#
-		# 	master = {
-		# 		new_is_master = "true";
-		# 	};
-		#
-		# 	gestures = {
-		# 		workspace_swipe = false;
-		# 	};
-		#
-		# 	misc = {
-		# 		force_default_wallpaper = 0;
-		# 		# disable_hyprland_logo = true
-		# 	};
-		#
-		# 	windowrulev2 = [
-		# 		"nomaximizerequest, class:.*"
-		# 	];
-		# };
+		settings = {
+			monitor = "eDP-1,preferred,auto,1";
+			exec-once = ''${startupScript}/bin/start'';
+			env = [
+				"XCURSOR_SIZE,24"
+				"GRIMBLAST_EDITOR,\"swappy -f\""
+			];
 
-		extraConfig = /* bash */ ''
-		monitor=eDP-1,preferred,auto,1
+			"$terminal" = "kitty";
+			"$fileManager" = "dolphin";
+			"$webBrowser" = "firefox";
+			"$launcher" = "rofi -show drun -show-icons";
+			"$mainMod" = "SUPER";
+			# "$screenshot_format" = "%Y-%m-%d,%H:%M:%S.png";
+			"$screenshot_args" = "--notify --freeze ~/Screenshots/Raw/$(date +\"%Y-%m-%d,%H:%M:%S.png\")";
+			bind = [
+				"$mainMod SHIFT, E, exec, wl-paste | swappy -f -"
+				"$mainMod, S, exec, grimblast copysave area $screenshot_args"
+				"$mainMod SHIFT, S, exec, grimblast copysave active $screenshot_args"
+				", PRINT, exec, grimblast copysave output $screenshot_args"
+				"SHIFT, PRINT, exec, grimblast copysave screen $screenshot_args"
 
-		exec-once = swww init; swww img ~/Wallpapers/hyprland_wallpaper.png --transition-type none
-		exec-once = hyprctl setcursor "Bibata-Modern-Ice" 24 &
-		exec-once = nm-applet --indicator &
-		# exec-once = eww daemon && eww open bar
-		exec-once = waybar &
-		exec-once = mako &
-		# exec-once = armcord &
+				# Apps
+				"$mainMod, return, exec, $terminal"
+				"$mainMod, space, exec, $launcher"
+				"$mainMod, E, exec, $fileManager"
+				"$mainMod, B, exec, $webBrowser"
 
-		$terminal = kitty
-		$fileManager = dolphin
-		$webBrowser = qutebrowser
-		$launcher = rofi -show drun -show-icons
-		# $screenshot = grim -g "$(slurp)" - | convert - -shave 1x1 PNG:- | swappy -f - &
-		# $screenshot_cp = grim -g "$(slurp)" - | convert - -shave 1x1 PNG:- | wl-copy
-		# $edit_image = wl-paste | swappy -f - &
-		env = XCURSOR_SIZE,24
-		env = GRIMBLAST_EDITOR,"swappy -f"
+				# WM commands
+				", XF86PowerOff, exec, pgrep -x wlogout && pkill -x wlogout || wlogout"
+				"$mainMod, W, killactive,"
+				"$mainMod, O, fullscreen, 0"
+				"$mainMod SHIFT, O, fullscreen, 1"
+				"$mainMod, F, togglefloating,"
+				"$mainMod, P, pseudo,"
+				"$mainMod, T, togglesplit,"
+				"$mainMod, M, exit,"
 
-		$mainMod = SUPER
-		
-		# $screenshot_format = "%Y-%m-%d,%H:%M,%N.png"
-		$screenshot_format = "%Y-%m-%d,%H:%M:%S.png"
-		$screenshot_args = --notify --freeze ~/Screenshots/Raw/$(date +$screenshot_format)
-		# bind = $mainMod, S, exec, $screenshot
-		# bind = $mainMod SHIFT, S, exec, $screenshot_cp
-		bind = $mainMod SHIFT, E, exec, wl-paste | swappy -f -
-		bind = $mainMod, S, exec, grimblast copysave area $screenshot_args
-		bind = $mainMod SHIFT, S, exec, grimblast copysave active $screenshot_args
-		bind = , PRINT, exec, grimblast copysave output $screenshot_args
-		bind = SHIFT, PRINT, exec, grimblast copysave screen $screenshot_args
+				# Move focus
+				"$mainMod, h, movefocus, l"
+				"$mainMod, l, movefocus, r"
+				"$mainMod, k, movefocus, u"
+				"$mainMod, j, movefocus, d"
 
-		bind = , XF86PowerOff, exec, pgrep -x wlogout && pkill -x wlogout || wlogout
-		bind = $mainMod, return, exec, $terminal
-		bind = $mainMod, space, exec, $launcher
-		bind = $mainMod, W, killactive,
-		bind = $mainMod, E, exec, $fileManager
-		bind = $mainMod, B, exec, $webBrowser
-		bind = $mainMod, O, fullscreen, 0
-		bind = $mainMod SHIFT, O, fullscreen, 1
-		bind = $mainMod, F, togglefloating,
-		bind = $mainMod, P, pseudo,
-		bind = $mainMod, T, togglesplit,
-		bind = $mainMod, M, exit,
+				# Switch workspace with $mainMod + [0-9]
+				"$mainMod, 1, workspace, 1"
+				"$mainMod, 2, workspace, 2"
+				"$mainMod, 3, workspace, 3"
+				"$mainMod, 4, workspace, 4"
+				"$mainMod, 5, workspace, 5"
+				"$mainMod, 6, workspace, 6"
+				"$mainMod, 7, workspace, 7"
+				"$mainMod, 8, workspace, 8"
+				"$mainMod, 9, workspace, 9"
 
-		bind = $mainMod, h, movefocus, l
-		bind = $mainMod, l, movefocus, r
-		bind = $mainMod, k, movefocus, u
-		bind = $mainMod, j, movefocus, d
+				# Move window to workspace with $mainMod + SHIFT + [0-9]
+				"$mainMod SHIFT, 1, movetoworkspace, 1"
+				"$mainMod SHIFT, 2, movetoworkspace, 2"
+				"$mainMod SHIFT, 3, movetoworkspace, 3"
+				"$mainMod SHIFT, 4, movetoworkspace, 4"
+				"$mainMod SHIFT, 5, movetoworkspace, 5"
+				"$mainMod SHIFT, 6, movetoworkspace, 6"
+				"$mainMod SHIFT, 7, movetoworkspace, 7"
+				"$mainMod SHIFT, 8, movetoworkspace, 8"
+				"$mainMod SHIFT, 9, movetoworkspace, 9"
 
-		# Switch workspace with $mainMod + [0-9]
-		bind = $mainMod, 1, workspace, 1
-		bind = $mainMod, 2, workspace, 2
-		bind = $mainMod, 3, workspace, 3
-		bind = $mainMod, 4, workspace, 4
-		bind = $mainMod, 5, workspace, 5
-		bind = $mainMod, 6, workspace, 6
-		bind = $mainMod, 7, workspace, 7
-		bind = $mainMod, 8, workspace, 8
-		bind = $mainMod, 9, workspace, 9
+				# Scroll through workspaces with $mainMod + scroll
+				"$mainMod, mouse_down, workspace, e+1"
+				"$mainMod, mouse_up  , workspace, e-1"
+			];
 
-		# Move window to workspace with $mainMid + SHIFT + [0-9]
-		bind = $mainMod SHIFT, 1, movetoworkspace, 1
-		bind = $mainMod SHIFT, 2, movetoworkspace, 2
-		bind = $mainMod SHIFT, 3, movetoworkspace, 3
-		bind = $mainMod SHIFT, 4, movetoworkspace, 4
-		bind = $mainMod SHIFT, 5, movetoworkspace, 5
-		bind = $mainMod SHIFT, 6, movetoworkspace, 6
-		bind = $mainMod SHIFT, 7, movetoworkspace, 7
-		bind = $mainMod SHIFT, 8, movetoworkspace, 8
-		bind = $mainMod SHIFT, 9, movetoworkspace, 9
-
-		# Scroll through workspaces with $mainMod + scroll
-		bind = $mainMod, mouse_down, workspace, e+1
-		bind = $mainMod, mouse_up  , workspace, e-1
-
-		# Move/resize windows with $mainMod + LMB/RMB and dragging
-		bindm = $mainMod, mouse:272, movewindow
-		bindm = $mainMod, mouse:273, resizewindow
+			# Move/resize windows with $mainMod + LMB/RMB and dragging
+			bindm = [
+				"$mainMod, mouse:272, movewindow"
+				"$mainMod, mouse:273, resizewindow"
+			];
 
 		# l -> do stuff even when locked
 		# e -> repeats when key is held 
-		bindle = , XF86AudioRaiseVolume, exec, volumectl -u up 10
-		bindle = , XF86AudioLowerVolume, exec, volumectl -u down 10
-		bindl = , XF86AudioMute, exec, volumectl toggle-mute
-		bindle = SHIFT, XF86AudioRaiseVolume, exec, volumectl -mu up 10
-		bindle = SHIFT, XF86AudioLowerVolume, exec, volumectl -mu down 10
-		bindl = , XF86AudioMicMute, exec, volumectl -m toggle-mute
-		bindl = SHIFT, XF86AudioMute, exec, volumectl -m toggle-mute
+			bindl = [
+				", XF86AudioMute, exec, volumectl toggle-mute"
+				", XF86AudioMicMute, exec, volumectl -m toggle-mute"
+				"SHIFT, XF86AudioMute, exec, volumectl -m toggle-mute"
+				", XF86AudioPlay, exec, playerctl play-pause # the stupid key is called play , but it toggles "
+				", XF86AudioNext, exec, playerctl next "
+				", XF86AudioPrev, exec, playerctl previous"
+			];
 
-		bindle = , XF86MonBrightnessUp, exec, lightctl up 10
-		bindle = , XF86MonBrightnessDown, exec, lightctl down 10
+			bindle = [
+				", XF86AudioRaiseVolume, exec, volumectl -u up 10"
+				", XF86AudioLowerVolume, exec, volumectl -u down 10"
+				"SHIFT, XF86AudioRaiseVolume, exec, volumectl -mu up 10"
+				"SHIFT, XF86AudioLowerVolume, exec, volumectl -mu down 10"
 
-		bindle = , XF86Search, exec, $launcher
-		bindl = , XF86AudioPlay, exec, playerctl play-pause # the stupid key is called play , but it toggles 
-		bindl = , XF86AudioNext, exec, playerctl next 
-		bindl = , XF86AudioPrev, exec, playerctl previous
+				", XF86MonBrightnessUp, exec, lightctl up 10"
+				", XF86MonBrightnessDown, exec, lightctl down 10"
+				", XF86Search, exec, $launcher"
+			];
 
-    #### Other config
+			input = {
+				kb_layout = "no";
+				follow_mouse = 1;
+				touchpad = {
+					natural_scroll = true;
+				};
+				sensitivity = 0.0;
+				accel_profile = "flat";
+			};
 
-		input {
-			kb_layout = no
-			follow_mouse = 1
-			touchpad {
-			  natural_scroll = true
-			}
-			sensitivity = 0.0
-			accel_profile = flat
-		}
+			general = {
+				gaps_in = 20;
+				gaps_out = 20;
+				border_size = 2;
+				"col.active_border" = "rgba(${config.colorScheme.colors.base04}ee) rgba(${config.colorScheme.colors.base05}ee) 45deg";
+				"col.inactive_border" = "rgba(${config.colorScheme.colors.base00}aa)";
+				layout = "dwindle";
+				allow_tearing = "false";
+			};
 
-		general {
-			gaps_in = 20
-			gaps_out = 20
-			border_size = 2
-			col.active_border = rgba(${config.colorScheme.colors.base04}ee) rgba(${config.colorScheme.colors.base05}ee) 45deg
-			col.inactive_border = rgba(${config.colorScheme.colors.base00}aa)
+			decoration = {
+				rounding = 10;
+				blur = {
+					enabled = true;
+					size = 3;
+					passes = 1;
+					vibrancy = 0.1696;
+				};
+				drop_shadow = true;
+				shadow_range = 4;
+				shadow_render_power = 3;
+				"col.shadow" = "rgba(1a1a1aee)";
+			};
 
-			layout = dwindle
-			allow_tearing = false
-		}
+			animations = {
+				enabled = "true";
+				bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
 
-		decoration {
-			rounding = 10
+				animation = [
+					"windows, 1, 7, myBezier"
+					"windowsOut, 1, 7, myBezier, popin 80%"
+					"border, 1, 10, default"
+					"borderangle, 1, 8, default"
+					"fade, 1, 7, default"
+					"workspaces, 1, 6, default"
+				];
+			};
 
-			blur {
-				enabled = true
-				size = 3
-				passes = 1
-				vibrancy = 0.1696
-			}
-			
-			drop_shadow = true
-			shadow_range = 4
-			shadow_render_power = 3
-			col.shadow = rgba(1a1a1aee)
-		}
+			dwindle = {
+				pseudotile = "true";
+				preserve_split = "true";
+			};
 
-		animations {
-			enabled = true
+			master = {
+				new_is_master = "true";
+			};
 
-			bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+			gestures = {
+				workspace_swipe = false;
+			};
 
-			animation = windows, 1, 7, myBezier
-			animation = windowsOut, 1, 7, myBezier, popin 80%
-			animation = border, 1, 10, default
-			animation = borderangle, 1, 8, default
-			animation = fade, 1, 7, default
-			animation = workspaces, 1, 6, default
-		}
+			misc = {
+				force_default_wallpaper = 0;
+				# disable_hyprland_logo = true
+			};
 
-		dwindle {
-			pseudotile = true
-			preserve_split = true
-		}
-
-		master {
-			new_is_master = true
-		}
-
-		gestures {
-			workspace_swipe = false
-		}
-
-		misc {
-			force_default_wallpaper = 0
-			# disable_hyprland_logo = true
-		}
-
-		windowrulev2 = nomaximizerequest, class:.*
-		'';
+			windowrulev2 = [
+				"nomaximizerequest, class:.*"
+			];
+		};
 	};
 }
