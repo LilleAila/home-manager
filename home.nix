@@ -56,28 +56,6 @@
 		# steam # Install steam in system config instead
 		protonup-qt
 		pavucontrol
-
-		( pkgs.writeShellScriptBin "hm-rebuild" /*bash*/ ''
-		${pkgs.home-manager}/bin/home-manager switch
-		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
-		${pkgs.hyprland}/bin/hyprctl reload
-		pkill waybar
-		${pkgs.waybar}/bin/waybar &
-		'' )
-
-		# ( pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
-		# ${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
-		# 	background_opacity 0.0
-		# '' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "start" /*bash*/''
-		# 	sleep 1 && ${pkgs.cava}/bin/cava -p ${pkgs.writeText "cavaconf" ''
-		# 		[general]
-		# 		sensitivity = 25
-		#
-		# 		[color]
-		# 		foreground = "#${config.colorScheme.colors.base05}"
-		# 	''}
-		# ''}/bin/start
-		# '' )
   ];
 
 	programs.git = {

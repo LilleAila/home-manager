@@ -1,10 +1,10 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-	kittyBackground = pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
+	kitty_background = pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
 		${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
 			background_opacity 0.0
-		'' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "start" /*bash*/''
+		'' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "kittybg_process" /*bash*/''
 			sleep 1 && ${pkgs.cava}/bin/cava -p ${pkgs.writeText "cavaconf" ''
 				[general]
 				sensitivity = 25
@@ -12,14 +12,24 @@ let
 				[color]
 				foreground = "#${config.colorScheme.colors.base05}"
 			''}
-		''}/bin/start
+		''}/bin/kittybg_process
+	'';
+	rebuild_script = pkgs.writeShellScriptBin "hm-rebuild" /*bash*/ ''
+		${pkgs.home-manager}/bin/home-manager switch
+		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
+		${pkgs.hyprland}/bin/hyprctl reload
+		pkill waybar
+		pkill kittybg_process
+
+		${pkgs.waybar}/bin/waybar &
+		${kitty_background}/bin/kittybg &
 	'';
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
 		${inputs.hyprland.packages."${pkgs.system}".hyprland}/bin/hyprctl setcursor "Bibata-Modern-Ice" 24 &
 		${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
 		${pkgs.waybar}/bin/waybar &
 		${pkgs.mako}/bin/mako &
-		${kittyBackground}/bin/kittybg &
+		${kitty_background}/bin/kittybg &
 		# ${pkgs.swww}/bin/swww init &
 		sleep 1
 		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
@@ -28,9 +38,10 @@ in
 
 {
   home.packages = with pkgs; [
-		( ${kittyBackground} )
+	 ( kitty_background )
+	 ( rebuild_script )
 
-	  seatd
+		seatd
 		# wezterm
 		# kitty
 		# wofi
