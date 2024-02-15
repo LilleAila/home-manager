@@ -3,84 +3,57 @@
 {
 	home.packages = with pkgs; [
     inputs.gross.packages.${pkgs.system}.gross
+		eww-wayland
 	];
 
+	# programs.eww = {
+	# 	enable = true;
+	# 	package = pkgs.eww-wayland;
+	# 	configDir = ./eww;
+	# };
 
-	programs.eww = {
-		enable = true;
-		package = pkgs.eww-wayland;
-		# configDir = ./eww;
+	xdg.configFile."eww" = {
+		source = ./eww;
+		recursive = true;
 	};
 
-	xdg.configFile."eww/eww.yuck" = ''
-(deflisten hyprland "gross hyprland")
+# base00: ---- dark
+# base01: ---
+# base02: --
+# base03: -
+# base04: +
+# base05: ++
+# base06: +++
+# base07: ++++ light
+# base08: red
+# base09: orange
+# base0A: yellow
+# base0B: green
+# base0C: aqua / cyan
+# base0D: blue
+# base0E: purple
+# base0F: brown
 
-(defvar monitor_colors `["ws-red", "ws-yellow", "ws-green", "ws-blue"]`)
+	xdg.configFile."eww/css/colors.scss".text = with config.colorScheme.colors; /*scss*/ ''
+$base00: #${base00};
+$base01: #${base01};
+$base02: #${base02};
+$base03: #${base03};
+$base04: #${base04};
+$base05: #${base05};
+$base06: #${base06};
+$base07: #${base07};
+$base08: #${base08};
+$base09: #${base09};
+$base0A: #${base0A};
+$base0B: #${base0B};
+$base0C: #${base0C};
+$base0D: #${base0D};
+$base0E: #${base0E};
+$base0F: #${base0F};
 
-(defwidget workspaces []
-	(eventbox
-		:onscroll "echo {} | sed -e \"s/up/-1/g\" -r \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
-		(box
-			:class "module workspaces"
-			(for ws in {hyprland.workspaces}
-				(button
-					:onclick "hyprctl dispatch workspace ''${ws.name}"
-					:class `ws icon ''${ws.state == "Active" ? monitor_colors[ws.monitor] : ""}`
-					(box
-						:class `''${ws.name == hyprland.focused ? "focused" : ""}`
-						:height 3
-					)
-				)
-			)
-		)
-	)
-)
-
-
-(defwidget left []
-	(box
-		:space-evenly false
-		:halign "start"
-		(workspaces)
-	)
-)
-
-(defwidget center []
-	(box
-		:space-evenly false
-		:halign "center"
-	)
-)
-
-(defwidget right []
-	(box
-		:space-evenly false
-		:halign "end"
-	)
-)
-
-(defwidget bar-box []
-	(centerbox
-		(left)
-		(center)
-		(right)
-	)
-)
-
-
-(defwindow bar
-	:monitor 0
-	:geometry (geometry
-		:x "0%"
-		:y "0%"
-		:width "100%"
-		:height "32px"
-		:anchor "top center"
-	)
-	:stacking "fg"
-	:exclusive true
-	:namespace "bar"
-	(bar-box)
-)
+$bar-bg: #${base00}33;
+$bg: $base02;
+$fg: $base07;
 	'';
 }

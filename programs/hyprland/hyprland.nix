@@ -2,6 +2,12 @@
 
 let
 	kitty_background = pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
+		# ${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
+		# 	background_opacity 0.0
+		# '' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "kittybg_process" /*bash*/''
+		# 	${pkgs.cmatrix}/bin/cmatrix -u 6
+		# ''}/bin/kittybg_process
+
 		${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
 			background_opacity 0.0
 		'' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "kittybg_process" /*bash*/''
@@ -15,13 +21,21 @@ let
 		''}/bin/kittybg_process
 	'';
 	rebuild_script = pkgs.writeShellScriptBin "hm-rebuild" /*bash*/ ''
+		# Rebuild home-manager config
 		${pkgs.home-manager}/bin/home-manager switch
-		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
-		${pkgs.hyprland}/bin/hyprctl reload
-		pkill waybar
-		pkill kittybg_process
 
+		# Restart services
+		pkill waybar
 		${pkgs.waybar}/bin/waybar &
+
+		# pkill eww
+		# ${pkgs.eww-wayland}/bin/eww daemon && ${pkgs.eww-wayland}/bin/eww open bar # Change to flake input later
+
+		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
+
+		${pkgs.hyprland}/bin/hyprctl reload
+
+		pkill kittybg_process
 		${kitty_background}/bin/kittybg &
 	'';
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
@@ -71,6 +85,7 @@ in
 		./waybar.nix
 		./wlogout.nix
 		# ./eww.nix
+		./ags.nix
 	];
 
 	# programs.eww = {
@@ -186,26 +201,11 @@ in
 		xwayland.enable = true;
 
 		plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
-			# borders-plus-plus
 			hyprwinwrap
-			# hyprbars
-			# hyprtrails
 		];
 
 		settings = {
 			plugin = {
-				# hyprbars = {
-				# 	bar_height = 20;
-				# 	hyprbars-button = [
-				# 		"rgb(ff4040), 10, , hyprctl dispatch killactive"
-				# 		"rgb(eeee11), 10, , hyprctl dispatch killactive"
-				# 	];
-				# };
-
-				# hyprtrails = {
-				# 	color = "rgba(${config.colorScheme.colors.base04}99)";
-				# };
-
 				hyprwinwrap = {
 					class = "kitty-bg";
 				};
@@ -223,7 +223,10 @@ in
 			"$terminal" = "kitty";
 			"$fileManager" = "dolphin";
 			"$webBrowser" = "firefox";
+			# "$discord" = "${pkgs.webcord-vencord}/bin/webcord";
+			"$discord" = "webcord";
 			"$launcher" = "rofi -show drun -show-icons";
+
 			"$mainMod" = "SUPER";
 			# "$screenshot_format" = "%Y-%m-%d,%H:%M:%S.png";
 			"$screenshot_args" = "--notify --freeze";
@@ -240,6 +243,7 @@ in
 				"$mainMod, space, exec, $launcher"
 				"$mainMod, E, exec, $fileManager"
 				"$mainMod, B, exec, $webBrowser"
+				"$mainMod, C, exec, $discord"
 
 				# WM commands
 				", XF86PowerOff, exec, pgrep -x wlogout && pkill -x wlogout || wlogout"
@@ -336,9 +340,14 @@ in
 				rounding = 10;
 				blur = {
 					enabled = true;
-					size = 3;
-					passes = 1;
-					vibrancy = 0.1696;
+					brightness = 1.0;
+					contrast = 1.0;
+					noise = 0.02;
+					passes = 3;
+					size = 10;
+					# size = 3;
+					# passes = 1;
+					# vibrancy = 0.1696;
 				};
 				drop_shadow = true;
 				shadow_range = 4;
@@ -380,6 +389,10 @@ in
 
 			windowrulev2 = [
 				"nomaximizerequest, class:.*"
+			];
+
+			layerrule = [
+				"blur, bar"
 			];
 		};
 	};

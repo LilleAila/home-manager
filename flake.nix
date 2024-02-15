@@ -26,16 +26,21 @@
 		nix-index-database.url = "github:Mic92/nix-index-database";
 		nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-		# flake-parts = {
-		# 	url = "github:hercules-ci/flake-parts";
-		# 	inputs.nixpkgs-lib.follows = "nixpkgs";
-		# };
-		#
-		# gross = {
-		# 	url = "github:fufexan/gross";
-		# 	inputs.nixpkgs.follows = "nixpkgs";
-		# 	inputs.flake-parts.follows = "flake-parts";
-		# };
+		flake-parts = {
+			url = "github:hercules-ci/flake-parts";
+			inputs.nixpkgs-lib.follows = "nixpkgs";
+		};
+
+		gross = {
+			url = "github:fufexan/gross";
+			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.flake-parts.follows = "flake-parts";
+		};
+
+		ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, nix-index-database, ... }@inputs:

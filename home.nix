@@ -1,9 +1,5 @@
 { config, pkgs, inputs, lib, ... }:
 
-# let
-# 	gruvboxPlus = import ./gruvbox-plus.nix { inherit pkgs; };
-# in
-
 {	
 	home = {
 		username = "olai";
@@ -14,7 +10,7 @@
 	# targets.genericLinux.enable = true; # ENABLE ON NON-NIXOS
 
   imports = [
-		inputs.nix-colors.homeManagerModules.default
+		inputs.nix-colors.homeManagerModules.default # Provices nix-locate command
     ./programs/shell/zsh.nix
     ./programs/shell/neovim.nix
 	  ./programs/shell/terminal.nix
@@ -32,9 +28,9 @@
 	colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
 
 	# nixpkgs.config.allowUnfree = true;
-	# nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-	# 	"steam" # does not work idk
-	# ];
+	nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+		"discord"
+	];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -52,11 +48,23 @@
 		dconf
 
 		webcord-vencord
+		# discord
+		# (pkgs.discord.override {
+		# 	withVencord = true;
+		#  })
 
 		# steam # Install steam in system config instead
 		protonup-qt
 		pavucontrol
   ];
+
+	# programs.discocss = {
+	# 	enable = true;
+	# 	discordPackage = ( pkgs.discord.override {
+	# 		withVencord = true;
+	# 	});
+	# 	discordAlias = true;
+	# };
 
 	programs.git = {
 		enable = true;

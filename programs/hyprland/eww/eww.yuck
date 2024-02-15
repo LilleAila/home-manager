@@ -1,5 +1,5 @@
 (deflisten hyprland "gross hyprland")
 
-(include "./modules/workspaces.yuck")
-
 (include "./windows/bar.yuck")
+
+(include "./modules/workspaces.yuck")
