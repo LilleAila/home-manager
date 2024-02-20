@@ -25,11 +25,12 @@ let
 		${pkgs.home-manager}/bin/home-manager switch
 
 		# Restart services
-		pkill waybar
-		${pkgs.waybar}/bin/waybar &
-
+		# pkill waybar
+		# ${pkgs.waybar}/bin/waybar &
 		# pkill eww
 		# ${pkgs.eww-wayland}/bin/eww daemon && ${pkgs.eww-wayland}/bin/eww open bar # Change to flake input later
+		pkill ags
+		ags &
 
 		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
 
@@ -41,7 +42,8 @@ let
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
 		${inputs.hyprland.packages."${pkgs.system}".hyprland}/bin/hyprctl setcursor "Bibata-Modern-Ice" 24 &
 		${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
-		${pkgs.waybar}/bin/waybar &
+		# ${pkgs.waybar}/bin/waybar &
+		ags &
 		${pkgs.mako}/bin/mako &
 		${kitty_background}/bin/kittybg &
 		# ${pkgs.swww}/bin/swww init &
@@ -240,6 +242,7 @@ in
 
 				# Apps
 				"$mainMod, return, exec, $terminal"
+				# ", XF86Launch1, exec, $terminal"
 				"$mainMod, space, exec, $launcher"
 				"$mainMod, E, exec, $fileManager"
 				"$mainMod, B, exec, $webBrowser"
@@ -247,6 +250,10 @@ in
 
 				# WM commands
 				", XF86PowerOff, exec, pgrep -x wlogout && pkill -x wlogout || wlogout"
+				", XF86Launch1, exec, pgrep -x wlogout && pkill -x wlogout || wlogout"
+				", XF86WLAN, exec, rfkill toggle all"
+				", XF86Back, workspace, -1"
+				", XF86Forward, workspace, +1"
 				"$mainMod, W, killactive,"
 				"$mainMod, O, fullscreen, 0"
 				"$mainMod SHIFT, O, fullscreen, 1"
@@ -326,6 +333,12 @@ in
 				accel_profile = "flat";
 			};
 
+			# "device:synps/2-synaptics-touchpad"
+
+			gestures = {
+				workspace_swipe = false;
+			};
+
 			general = {
 				gaps_in = 20;
 				gaps_out = 20;
@@ -376,10 +389,6 @@ in
 
 			master = {
 				new_is_master = "true";
-			};
-
-			gestures = {
-				workspace_swipe = false;
 			};
 
 			misc = {
