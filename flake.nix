@@ -63,6 +63,8 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
+			nixpkgs.overlays = [ ( import inputs.emacs-overlay ) ];
+
       homeConfigurations."olai" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 

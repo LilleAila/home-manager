@@ -19,7 +19,7 @@
 		./programs/browser.nix
 		# ./programs/discord.nix
 		./programs/texlive.nix
-		./programs/emacs.nix
+		./programs/emacs
 
 		./programs/wallpaper/wallpaper.nix
 	  ./programs/hyprland/hyprland.nix
