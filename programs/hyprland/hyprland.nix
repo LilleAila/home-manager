@@ -432,9 +432,9 @@ in
 				# disable_hyprland_logo = true
 			};
 
-			windowrulev2 = [
-				"nomaximizerequest, class:.*"
-			];
+			# windowrulev2 = [
+			# 	"nomaximizerequest, class:.*"
+			# ];
 
 			layerrule = [
 				"blur, bar"
