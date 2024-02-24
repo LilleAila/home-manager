@@ -34,7 +34,7 @@
 # base0E: purple
 # base0F: brown
 
-	xdg.configFile."eww/css/colors.scss".text = with config.colorScheme.colors; /*scss*/ ''
+	xdg.configFile."eww/css/colors.scss".text = with config.colorScheme.palette; /*scss*/ ''
 $base00: #${base00};
 $base01: #${base01};
 $base02: #${base02};

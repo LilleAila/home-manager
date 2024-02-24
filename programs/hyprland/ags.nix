@@ -26,7 +26,7 @@
 # 	};
 #
 # 	# Something like this for color scheme
-# 	xdg.configFile."ags/style/vars.scss".text = with config.colorScheme.colors; /*scss*/ ''
+# 	xdg.configFile."ags/style/vars.scss".text = with config.colorScheme.palette; /*scss*/ ''
 # $base00: #${base00}; /* ---- */
 # $base01: #${base01}; /* --- */
 # $base02: #${base02}; /* -- */

@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-	home.file."Wallpapers/hyprland_wallpaper.png".source = with config.colorScheme.colors; pkgs.runCommand "wallpaper" {} ''
+	home.file."Wallpapers/hyprland_wallpaper.png".source = with config.colorScheme.palette; pkgs.runCommand "wallpaper" {} ''
 canvas_width=1920
 canvas_height=1080
 

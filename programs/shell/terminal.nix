@@ -11,7 +11,7 @@
 	# 	package = pkgs.wezterm;
 	# 	enableZshIntegration = true;
 	# 	colorSchemes = {
-	# 		base16 = with config.colorScheme.colors; {
+	# 		base16 = with config.colorScheme.palette; {
 	# 			foreground = "#${base06}";
 	# 			background = "#${base00}";
 	# 			cursor_bg = "#${base06}";
@@ -66,7 +66,7 @@
 			package = pkgs.fira-code-nerdfont;
 		};
 		# shellIntegration.enableZshIntegration = true;
-		settings = with config.colorScheme.colors; {
+		settings = with config.colorScheme.palette; {
 			scrollback_lines = 1000;
 			placement_strategy = "center";
 			allow_remote_control = "yes";
@@ -109,7 +109,7 @@
 
 	# programs.alacritty = {
 	# 	enable = true;
-	# 	settings.colors = with config.colorScheme.colors; {
+	# 	settings.colors = with config.colorScheme.palette; {
 	# 		bright = {
 	# 			black = "0x${base00}";
 	# 			blue = "0x${base0D}";

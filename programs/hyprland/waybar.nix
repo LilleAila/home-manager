@@ -1,24 +1,24 @@
 { config, pkgs, ... }:
 
 let
-	background = config.colorScheme.colors.base00;
-	alt_background = config.colorScheme.colors.base01;
-	alt2_background = config.colorScheme.colors.base02;
-	alt3_background = config.colorScheme.colors.base03;
+	background = config.colorScheme.palette.base00;
+	alt_background = config.colorScheme.palette.base01;
+	alt2_background = config.colorScheme.palette.base02;
+	alt3_background = config.colorScheme.palette.base03;
 	
-	dark_foreground = config.colorScheme.colors.base04;
-	foreground = config.colorScheme.colors.base05;
-	alt_foreground = config.colorScheme.colors.base06;
-	alt2_foreground = config.colorScheme.colors.base07;
+	dark_foreground = config.colorScheme.palette.base04;
+	foreground = config.colorScheme.palette.base05;
+	alt_foreground = config.colorScheme.palette.base06;
+	alt2_foreground = config.colorScheme.palette.base07;
 
-	red = config.colorScheme.colors.base08;
-	orange = config.colorScheme.colors.base09;
-	yellow = config.colorScheme.colors.base0A;
-	green = config.colorScheme.colors.base0B;
-	cyan = config.colorScheme.colors.base0C;
-	blue = config.colorScheme.colors.base0D;
-	purple = config.colorScheme.colors.base0E;
-	brown = config.colorScheme.colors.base0F;
+	red = config.colorScheme.palette.base08;
+	orange = config.colorScheme.palette.base09;
+	yellow = config.colorScheme.palette.base0A;
+	green = config.colorScheme.palette.base0B;
+	cyan = config.colorScheme.palette.base0C;
+	blue = config.colorScheme.palette.base0D;
+	purple = config.colorScheme.palette.base0E;
+	brown = config.colorScheme.palette.base0F;
 in
 {
 	programs.waybar = {
@@ -120,7 +120,7 @@ in
 			};
 		};
 
-		style = with config.colorScheme.colors; /*css*/ ''
+		style = with config.colorScheme.palette; /*css*/ ''
 @define-color background #${base00};
 @define-color alt_background #${base01};
 @define-color alt2_background #${base02};

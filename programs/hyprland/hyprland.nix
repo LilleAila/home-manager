@@ -16,7 +16,7 @@ let
 				sensitivity = 25
 
 				[color]
-				foreground = "#${config.colorScheme.colors.base05}"
+				foreground = "#${config.colorScheme.palette.base05}"
 			''}
 		''}/bin/kittybg_process
 	'';
@@ -36,8 +36,8 @@ let
 
 		${pkgs.hyprland}/bin/hyprctl reload
 
-		pkill kittybg_process
-		${kitty_background}/bin/kittybg &
+		# pkill kittybg_process
+		# ${kitty_background}/bin/kittybg &
 	'';
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
 		${inputs.hyprland.packages."${pkgs.system}".hyprland}/bin/hyprctl setcursor "Bibata-Modern-Ice" 24 &
@@ -45,7 +45,7 @@ let
 		# ${pkgs.waybar}/bin/waybar &
 		ags &
 		${pkgs.mako}/bin/mako &
-		${kitty_background}/bin/kittybg &
+		# ${kitty_background}/bin/kittybg &
 		# ${pkgs.swww}/bin/swww init &
 		sleep 1
 		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
@@ -54,7 +54,7 @@ in
 
 {
   home.packages = with pkgs; [
-	 ( kitty_background )
+	 # ( kitty_background )
 	 ( rebuild_script )
 
 		seatd
@@ -139,11 +139,11 @@ in
 
 	services.mako = {
 		enable = true;
-		backgroundColor = "#${config.colorScheme.colors.base01}";
-		borderColor = "#${config.colorScheme.colors.base0E}";
+		backgroundColor = "#${config.colorScheme.palette.base01}";
+		borderColor = "#${config.colorScheme.palette.base0E}";
 		borderRadius = 5;
 		borderSize = 2;
-		textColor = "#${config.colorScheme.colors.base04}";
+		textColor = "#${config.colorScheme.palette.base04}";
 		layer = "overlay";
 	};
 
@@ -157,10 +157,10 @@ in
 			indicator-thickness = 7;
 			effect-blur = "7x5";
 			effect-vignette = "0.5:0.5";
-			ring-color = "${config.colorScheme.colors.base06}";
-			key-hl-color = "${config.colorScheme.colors.base0B}";
+			ring-color = "${config.colorScheme.palette.base06}";
+			key-hl-color = "${config.colorScheme.palette.base0B}";
 			line-color = "00000000";
-			inside-color = "${config.colorScheme.colors.base00}88";
+			inside-color = "${config.colorScheme.palette.base00}88";
 			separator-color = "00000000";
 			grace = 2;
 			fade-in = 0.2;
@@ -183,10 +183,10 @@ in
 			block-count = 10;
 			fade-in = 0.2;
 			fade-out = 0.2;
-			background = "#${config.colorScheme.colors.base03}";
-			bar-bg-color = "#${config.colorScheme.colors.base02}";
-			border-color = "#${config.colorScheme.colors.base05}";
-			bar-fg-color = "#${config.colorScheme.colors.base05}";
+			background = "#${config.colorScheme.palette.base03}";
+			bar-bg-color = "#${config.colorScheme.palette.base02}";
+			border-color = "#${config.colorScheme.palette.base05}";
+			bar-fg-color = "#${config.colorScheme.palette.base05}";
 		};
 	};
 
@@ -238,17 +238,17 @@ in
 		systemd.enable = true;
 		xwayland.enable = true;
 
-		plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
-			hyprwinwrap
-		];
-
-		settings = {
-			plugin = {
-				hyprwinwrap = {
-					class = "kitty-bg";
-				};
-			};
-		};
+		# plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
+		# 	hyprwinwrap
+		# ];
+		#
+		# settings = {
+		# 	plugin = {
+		# 		hyprwinwrap = {
+		# 			class = "kitty-bg";
+		# 		};
+		# 	};
+		# };
 
 		settings = {
 			monitor = "eDP-1,preferred,auto,1";
@@ -379,8 +379,8 @@ in
 				gaps_in = 20;
 				gaps_out = 20;
 				border_size = 2;
-				"col.active_border" = "rgba(${config.colorScheme.colors.base04}ee) rgba(${config.colorScheme.colors.base05}ee) 45deg";
-				"col.inactive_border" = "rgba(${config.colorScheme.colors.base00}aa)";
+				"col.active_border" = "rgba(${config.colorScheme.palette.base04}ee) rgba(${config.colorScheme.palette.base05}ee) 45deg";
+				"col.inactive_border" = "rgba(${config.colorScheme.palette.base00}aa)";
 				layout = "dwindle";
 				allow_tearing = "false";
 			};

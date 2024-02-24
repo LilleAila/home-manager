@@ -42,7 +42,7 @@
 			keybind = "r";
 		}
 		];
-		style = /* css */ with config.colorScheme.colors; ''
+		style = /* css */ with config.colorScheme.palette; ''
 * {
 	background-image: none;
 }
