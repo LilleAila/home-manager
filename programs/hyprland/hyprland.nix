@@ -88,7 +88,43 @@ in
 		./wlogout.nix
 		# ./eww.nix
 		./ags.nix
+
+		inputs.hyprlock.homeManagerModules.default
 	];
+	programs.hyprlock = {
+		enable = true;
+		general = {
+			disable_loading_bar = false;
+			grace = 1;
+			hide_cursor = true;
+			no_fade_in = false;
+		};
+		input-fields = [
+			{
+				# monitor = "LVDS-1";
+				size = {
+					width = 350;
+					height = 40;
+				};
+				outline_thickness = 1;
+				dots_size = 0.3;
+				dots_spacing = 0.15;
+				dots_center = true;
+				# outer_color = "rgb(${})";
+				# inner_color = "rgb(${})";
+				# font_color = "rgb(${})";
+				fade_on_empty = true;
+				placeholder_text = "<i>Input password...<\i>";
+				hide_input = false;
+				position = {
+					x = 0;
+					y = -20;
+				};
+				halign = "center";
+				valign = "center";
+			}
+		];
+	};
 
 	# programs.eww = {
 	# 	enable = true;

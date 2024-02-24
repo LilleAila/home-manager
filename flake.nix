@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+		########## Hyprland
 		hyprland.url = "github:hyprwm/Hyprland";
 
 		hyprland-plugins = {
@@ -16,6 +17,12 @@
 			inputs.hyprland.follows = "hyprland";
 		};
 
+		hyprlock = {
+			url = "github:hyprwm/hyprlock";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		########## Other
 		firefox-addons = {
 			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -41,6 +48,14 @@
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+		########## Emacs
+		flake-utils.url = "github:numtide/flake-utils";
+		emacs-overlay = {
+			url = "github:nix-community/emacs-overlay";
+			inputs.flake-utils.follows = "flake-utils";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
   };
 
   outputs = { nixpkgs, home-manager, nix-index-database, ... }@inputs:
