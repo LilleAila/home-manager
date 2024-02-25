@@ -7,10 +7,25 @@
 		profiles.olai = {
 			bookmarks = [
 				{
-					name = "wikipedia";
+					name = "Wikipedia";
 					tags = [ "wiki" ];
 					keyword = "wiki";
 					url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
+				}
+				{
+					name = "Toolbar";
+					toolbar = true;
+					bookmarks = [
+						{
+							name = "NixOS";
+							url = "https://nixos.org";
+						}
+						{
+							name = "NixOS wiki";
+							tags = [ "wiki" "nix" ];
+							url = "https://nixos.wiki/";
+						}
+					];
 				}
 			];
 
@@ -57,11 +72,21 @@
 			};
 			search.force = true;
 
+# Settings are stored in ~/.mozilla/firefox/profile_name/prefs.js
+# To find the name of a setting, wither use `diff old_settings new_settings`
+# Or check which value changes in about:config when setting it in about:preferences
+			settings = {
+				"browser.startup.page" = "3"; # Restore pages on startup
+			};
+
+			# All available extensions:
+			# https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
 			extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
 				ublock-origin
 				sponsorblock
 				darkreader
 				youtube-shorts-block
+				enhanced-h264ify
 			];
 		};
 	};

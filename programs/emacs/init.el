@@ -1,3 +1,11 @@
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+;; https://jwiegley.github.io/use-package/keywords/
+;; === Split config into multiple files ===
+;; The files can now be "loaded" with (require 'file-name)
+(dolist (path '("config"))
+  (add-to-list 'load-path (locate-user-emacs-file path)))
+
+(require 'config-essential)
+(require 'config-ui)
+(require 'config-completion)
+(require 'config-help)
+(require 'config-bindings)

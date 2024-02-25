@@ -280,7 +280,9 @@ in
 				"$mainMod, return, exec, $terminal"
 				# ", XF86Launch1, exec, $terminal"
 				"$mainMod, space, exec, $launcher"
-				"$mainMod, E, exec, $fileManager"
+				"$mainMod, E, exec, emacsclient -c"
+				# "$mainMod SHIFT, E, exec, systemctl --user restart emacs"
+				"$mainMod, D, exec, $fileManager"
 				"$mainMod, B, exec, $webBrowser"
 				"$mainMod, C, exec, $discord"
 
@@ -367,6 +369,9 @@ in
 				};
 				sensitivity = 0.0;
 				accel_profile = "flat";
+				kb_options = [
+					"ctrl:nocaps"
+				];
 			};
 
 			# "device:synps/2-synaptics-touchpad"

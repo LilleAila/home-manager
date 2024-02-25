@@ -63,22 +63,18 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-			nixpkgs.overlays = [ ( import inputs.emacs-overlay ) ];
+			# nixpkgs.overlays = [ ( import inputs.emacs-overlay ) ];
 
       homeConfigurations."olai" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
 				extraSpecialArgs = { inherit inputs; };
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
         modules = [
+					({ nixpkgs.overlays = [ inputs.emacs-overlay.overlay ]; })
 					./home.nix
 					nix-index-database.hmModules.nix-index
 				];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
       };
     };
 }
