@@ -1,71 +1,20 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-	kitty_background = pkgs.writeShellScriptBin "kittybg" /*bash*/ ''
-		# ${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
-		# 	background_opacity 0.0
-		# '' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "kittybg_process" /*bash*/''
-		# 	${pkgs.cmatrix}/bin/cmatrix -u 6
-		# ''}/bin/kittybg_process
-
-		${pkgs.kitty}/bin/kitty -c "${pkgs.writeText "kittyconfigbg.conf" ''
-			background_opacity 0.0
-		'' }" --class="kitty-bg" ${pkgs.writeShellScriptBin "kittybg_process" /*bash*/''
-			sleep 1 && ${pkgs.cava}/bin/cava -p ${pkgs.writeText "cavaconf" ''
-				[general]
-				sensitivity = 25
-
-				[color]
-				foreground = "#${config.colorScheme.palette.base05}"
-			''}
-		''}/bin/kittybg_process
-	'';
-	rebuild_script = pkgs.writeShellScriptBin "hm-rebuild" /*bash*/ ''
-		# Rebuild home-manager config
-		${pkgs.home-manager}/bin/home-manager switch
-
-		# Restart services
-		# pkill waybar
-		# ${pkgs.waybar}/bin/waybar &
-		# pkill eww
-		# ${pkgs.eww-wayland}/bin/eww daemon && ${pkgs.eww-wayland}/bin/eww open bar # Change to flake input later
-		pkill ags
-		ags &
-
-		# ${pkgs.swww}/bin/swww img ~/Wallpapers/hyprland_wallpaper.png
-
-		${pkgs.hyprland}/bin/hyprctl reload
-
-		# pkill kittybg_process
-		# ${kitty_background}/bin/kittybg &
-	'';
 	startupScript = pkgs.pkgs.writeShellScriptBin "start" /* bash */ ''
 		${inputs.hyprland.packages."${pkgs.system}".hyprland}/bin/hyprctl setcursor "Bibata-Modern-Ice" 24 &
 		${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
-		# ${pkgs.waybar}/bin/waybar &
 		ags &
 		${pkgs.mako}/bin/mako &
-		# ${kitty_background}/bin/kittybg &
-		# ${pkgs.swww}/bin/swww init &
-		sleep 1
-		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
 	'';
 in
 
 {
-  home.packages = with pkgs; [
-	 # ( kitty_background )
-	 ( rebuild_script )
-
+	home.packages = with pkgs; [
 		seatd
-		# wezterm
-		# kitty
-		# wofi
 		rofi-wayland
 		dolphin
-		# firefox
-		qutebrowser
-
+		# qutebrowser
 		libnotify
 		swww
 		networkmanagerapplet
@@ -73,209 +22,18 @@ in
 		slurp
 		wl-clipboard
 		swappy
-		
 		avizo
 		pamixer
-		# pactl
 		playerctl
 		brightnessctl
-
 		grimblast
 	];
-
-	imports = [
-		./waybar.nix
-		./wlogout.nix
-		# ./eww.nix
-		./ags.nix
-
-		inputs.hyprlock.homeManagerModules.default
-		inputs.hypridle.homeManagerModules.default
-	];
-	programs.hyprlock = {
-		enable = false;
-		general = {
-			disable_loading_bar = false;
-			grace = 1;
-			hide_cursor = true;
-			no_fade_in = false;
-		};
-		input-fields = [
-			{
-				# monitor = "LVDS-1";
-				size = {
-					width = 350;
-					height = 40;
-				};
-				outline_thickness = 1;
-				dots_size = 0.3;
-				dots_spacing = 0.15;
-				dots_center = true;
-				outer_color = "rgb(${config.colorScheme.palette.base04})";
-				inner_color = "rgb(${config.colorScheme.palette.base02})";
-				font_color = "rgb(${config.colorScheme.palette.base07})";
-				fade_on_empty = true;
-				placeholder_text = "<i>Input password...</i>";
-				hide_input = false;
-				position = {
-					x = 0;
-					y = -20;
-				};
-				halign = "center";
-				valign = "center";
-			}
-		];
-		backgrounds = [
-			{
-				color = "rgb(${config.colorScheme.palette.base02})";
-				path = "";
-				# path = "screenshot"; # I might switch when this is fixed
-			}
-		];
-	};
-
-	services.hypridle = {
-		enable = false;
-    beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-		# lockCmd = "swaylock";
-		lockCmd = lib.getExe config.programs.swaylock.package;
-		listeners = [
-			{
-				timeout = 300;
-				onTimeout = ''${pkgs.writeShellScript "suspend-script" ''
-				${pkgs.pipewire}/bin/pw-cli i all 2>&1 | ${pkgs.ripgrep}/bin/rg running -q
-				# only suspend if audio isn't running
-				if [ $? == 1 ]; then
-					${pkgs.systemd}/bin/systemctl suspend
-				fi
-				''}/bin/suspend-script'';
-			}
-		];
-	};
-
-	# programs.eww = {
-	# 	enable = true;
-	# 	package = pkgs.eww-wayland;
-	# 	configDir = ./eww;
-	# };
-
-	# services.dunst = {
-	# 	enable = true;
-	# 	package = pkgs.dunst;
-	# };
-
-	services.mako = {
-		enable = true;
-		backgroundColor = "#${config.colorScheme.palette.base01}";
-		borderColor = "#${config.colorScheme.palette.base0E}";
-		borderRadius = 5;
-		borderSize = 2;
-		textColor = "#${config.colorScheme.palette.base04}";
-		layer = "overlay";
-	};
-
-	programs.swaylock = {
-		enable = true;
-		package = pkgs.swaylock-effects;
-		settings = {
-			screenshot = true;
-			clock = true;
-			indicator-radius = 100;
-			indicator-thickness = 7;
-			effect-blur = "7x5";
-			effect-vignette = "0.5:0.5";
-			ring-color = "${config.colorScheme.palette.base06}";
-			key-hl-color = "${config.colorScheme.palette.base0B}";
-			line-color = "00000000";
-			inside-color = "${config.colorScheme.palette.base00}88";
-			separator-color = "00000000";
-			grace = 2;
-			fade-in = 0.2;
-		};
-	};
-
-	services.avizo = {
-		enable = true;
-		package = pkgs.avizo;
-		settings.default = {
-			time = 1.0;
-			width = 160;
-			height = 160;
-			padding = 12;
-			y-offset = 0.9;
-			border-radius = 16;
-			border-width = 3;
-			block-height = 10;
-			block-spacing = 2;
-			block-count = 10;
-			fade-in = 0.2;
-			fade-out = 0.2;
-			background = "#${config.colorScheme.palette.base03}";
-			bar-bg-color = "#${config.colorScheme.palette.base02}";
-			border-color = "#${config.colorScheme.palette.base05}";
-			bar-fg-color = "#${config.colorScheme.palette.base05}";
-		};
-	};
-
-	qt = {
-		enable = true;
-		platformTheme = "gtk";
-		style.name = "adwaita-dark";
-		style.package = pkgs.adwaita-qt;
-	};
-
-	gtk = {
-		enable = true;
-		cursorTheme.package = pkgs.bibata-cursors;
-		cursorTheme.name = "Bibata-Modern-Ice";
-		theme.package = pkgs.adw-gtk3;
-		theme.name = "adw-gtk3-dark";
-		iconTheme.package = pkgs.papirus-icon-theme;
-		iconTheme.name = "Papirus-Dark";
-	};
-
-	# # Instead put it in the home folder, for example to have multiple at once without rebuilding
-	# home.file = {
-	# 	".icons/bibata".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
-	# };
-	# gtk-cursorTheme.name = "Bibata-Modern-Ice"
-
-	xdg.mimeApps.defaultApplications = {
-		"text/plain" = [ "neovide.desktop" ];
-		"application/pdf" = [ "zathura.desktop" ];
-		"image/*" = [ "sxiv.desktop" ];
-		"video/png" = [ "mpv.desktop" ];
-		"video/jpg" = [ "mpv.desktop" ];
-		"video/*" = [ "mpv.desktop" ];
-	};
-
-
-	home.file.".config/swappy/config".text = ''
-	[Default]
-	save_dir=$HOME/Screenshots/Edited
-	save_filename_format=%Y-%m-%d,%H:%M:%S.png
-	show_panel=true
-	# early_exit=true
-	'';
 
 	wayland.windowManager.hyprland = {
 		enable = true;
 		package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-		# enableNvidiaPatches = true;
 		systemd.enable = true;
 		xwayland.enable = true;
-
-		# plugins = with inputs.hyprland-plugins.packages."${pkgs.system}"; [
-		# 	hyprwinwrap
-		# ];
-		#
-		# settings = {
-		# 	plugin = {
-		# 		hyprwinwrap = {
-		# 			class = "kitty-bg";
-		# 		};
-		# 	};
-		# };
 
 		settings = {
 			monitor = "eDP-1,preferred,auto,1";
@@ -307,6 +65,8 @@ in
 				"$mainMod, return, exec, $terminal"
 				# ", XF86Launch1, exec, $terminal"
 				"$mainMod, space, exec, $launcher"
+		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
+		# ${pkgs.swww} img ~/Wallpapers/hyprland_wallpaper.png --transition-type none &
 				"$mainMod, E, exec, emacsclient -c"
 				# "$mainMod SHIFT, E, exec, systemctl --user restart emacs"
 				"$mainMod, D, exec, $fileManager"

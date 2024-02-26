@@ -7,6 +7,7 @@
 (setq initial-buffer-choice t)
 (setq initial-scratch-message ";; Scratch Buffer\n\n")
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-auto-revert-mode t)
 
 ;; === Disable default UI elements ===
 (scroll-bar-mode -1)

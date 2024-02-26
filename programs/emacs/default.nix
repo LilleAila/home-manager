@@ -4,30 +4,46 @@
 let
 	emacs-package = with pkgs; ((emacsPackagesFor emacs29-pgtk).emacsWithPackages (
 		epkgs: [
+			# === Use-package ===
 			epkgs.use-package
-			epkgs.doom-themes
 
+			# === Completion ===
 			epkgs.ivy
 			epkgs.ivy-rich
 			epkgs.counsel
 			epkgs.swiper
 			epkgs.helpful
 
+			# === UI ===
+			epkgs.doom-themes
 			epkgs.all-the-icons
 			epkgs.doom-modeline
 
-			epkgs.undo-tree
-
+			# === Keybinds ===
 			epkgs.evil
 			epkgs.evil-collection
-
 			epkgs.which-key
 			epkgs.general
 			epkgs.hydra
+
+			# === IDE ===
+			epkgs.lsp-mode
+			epkgs.company
+			epkgs.company-box
+			epkgs.undo-tree
+			epkgs.typescript-mode
 		]
 	));
 in
 {
+	home.packages = with pkgs; [
+		# === TypeScript ===
+		nodejs
+		nodePackages.npm
+		nodePackages.typescript
+		nodePackages.typescript-language-server
+	];
+
 	programs.emacs = {
 		enable = true;
 		package = emacs-package;

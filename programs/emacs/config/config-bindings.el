@@ -49,12 +49,4 @@
 ;; (os/leader-keys
 ;;     "ts" 'hydra-text-scale/body :which-key "scale text")
 
-;; === Undo Tree ===
-;; probably doesn't belong in this file, should move to config-ide.el
-(use-package undo-tree
-  :init
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-  :config
-  (global-undo-tree-mode))
-
 (provide 'config-bindings)

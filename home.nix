@@ -22,7 +22,8 @@
 		./programs/emacs
 
 		./programs/wallpaper/wallpaper.nix
-	  ./programs/hyprland/hyprland.nix
+	  # ./programs/hyprland/hyprland.nix
+		./programs/wm/hyprland
   ];
 
 	# https://github.com/tinted-theming/base16-schemes/
