@@ -11,3 +11,10 @@
 (require 'config-bindings)
 
 (require 'config-lsp)
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
+(require 'eaf)
+(require 'eaf-browser)
+(require 'eaf-camera)
+(require 'eaf-pyqterminal)
+(require 'eaf-demo)
