@@ -34,6 +34,7 @@ let
 			epkgs.company
 			epkgs.company-box
 			epkgs.undo-tree
+			epkgs.evil-nerd-commenter
 			epkgs.typescript-mode
 		]
 	));

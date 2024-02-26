@@ -41,12 +41,19 @@
 	:hook (company-mode . company-box-mode)
 )
 
+;; === Undo tree ===
 (use-package undo-tree
   :init
   (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
   :config
   (global-undo-tree-mode))
 
+;; === Commenting ===
+(use-package evil-nerd-commenter
+	:bind ("M-#" . evilnc-comment-or-uncomment-lines)
+)
+
+;; === Languages === (move to separate files)
 (use-package typescript-mode
 	:mode "\\.ts\\'"
 	:hook (typescript-mode . lsp-deferred)
