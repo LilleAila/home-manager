@@ -77,6 +77,8 @@
 # Or check which value changes in about:config when setting it in about:preferences
 			settings = {
 				"browser.startup.page" = "3"; # Restore pages on startup
+				"media.hardware-video-decoding.force-enabled" = true;
+				"layers.acceleration.force-enabled" = true;
 			};
 
 			# All available extensions:

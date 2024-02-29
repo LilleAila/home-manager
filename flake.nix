@@ -61,6 +61,16 @@
 			inputs.flake-utils.follows = "flake-utils";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		wrapper-manager = {
+			url = "github:viperML/wrapper-manager";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		# eaf = {
+		# 	url = "github:emacs-eaf/emacs-application-framework";
+		# 	flake = false;
+		# };
   };
 
   outputs = { nixpkgs, home-manager, nix-index-database, ... }@inputs:
