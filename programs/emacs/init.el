@@ -12,18 +12,7 @@
 
 (require 'config-lsp)
 
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
-(require 'eaf)
-(require 'eaf-camera)
-(require 'eaf-demo)
-(require 'eaf-browser)
-
-;; (use-package eaf
-;;   ;; :load-path (lambda () (expand-file-name "site-elisp/emacs-application-framework" user-emacs-directory))
-;;   :config
-;;   (require 'eaf-camera nil t)
-;;   (require 'eaf-demo nil t)
-;;   (require 'eaf-browser nil t)
-;;   (when (display-graphic-p)
-;;     (require 'eaf-all-the-icons))
-;; )
+;; (require 'eaf)
+;; (require 'eaf-demo)
+;; (require 'eaf-browser)
+;; (require 'eaf-camera)

@@ -6,7 +6,7 @@ let
 		epkgs: [
 			# === Use-package ===
 			epkgs.use-package
-			( import ./eaf.nix { inherit pkgs; })
+			# ( import ./eaf.nix { inherit pkgs; })
 
 			# === Completion ===
 			epkgs.ivy
