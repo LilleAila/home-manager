@@ -2,7 +2,9 @@
 # https://github.com/ircurry/cfg/blob/master/home/programs/emacs/default.nix
 
 let
-	emacs-package = with pkgs; ((emacsPackagesFor emacs29-pgtk).emacsWithPackages (
+	# The -pgtk version does NOT work with EXWM
+	# emacs-package = with pkgs; ((emacsPackagesFor emacs29-pgtk).emacsWithPackages (
+	emacs-package = with pkgs; ((emacsPackagesFor emacs29).emacsWithPackages (
 		epkgs: [
 			# === Use-package ===
 			epkgs.use-package
@@ -37,6 +39,8 @@ let
 			epkgs.undo-tree
 			epkgs.evil-nerd-commenter
 			epkgs.typescript-mode
+
+			epkgs.exwm
 		]
 	));
 	eaf-python-pkgs = python-pkgs: with python-pkgs; [
@@ -75,6 +79,7 @@ in
 		nodePackages.npm
 		nodePackages.typescript
 		nodePackages.typescript-language-server
+		xorg.xinit
 	];
 
 	programs.emacs = {
@@ -138,7 +143,7 @@ in
 
 	# Restart with systemctl --user restart emacs
 	services.emacs = {
-		enable = true;
+		enable = false;
 		package = emacs-wrapped;
 		client.enable = true;
 	};

@@ -9,6 +9,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-auto-revert-mode t)
 (setq custom-file (make-temp-file "emacs-custom-"))
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; === Disable default UI elements ===
 (scroll-bar-mode -1)
