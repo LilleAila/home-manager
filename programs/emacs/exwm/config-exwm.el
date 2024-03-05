@@ -1,12 +1,52 @@
+;; https://github.com/emacksnotes/exwm/wiki/EXWM-User-Guide
+
+(defun os/run-in-background (command)
+  (let ((command-parts (split-string command "[ ]+")))
+    (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+
+(defun os/exwm-init-hook ()
+  (exwm-workspace-switch-create 1)
+
+  (os/run-in-background "nm-applet")
+)
+
 (defun os/exwm-update-class ()
 	(exwm-workspace-rename-buffer exwm-class-name)
 )
 
+;; TODO: make this only run if emacs is started as a window manager
 (use-package exwm
 	:config
+	;; Set default number of workspaces
 	(setq exwm-workspace-number 5)
 
+	;; Fix EXWM buffer names
 	(add-hook 'exwm-update-class-hook #'os/exwm-update-class)
+
+	(add-hook 'exwm-init-hook #'os/exwm-init-hook)
+
+	;; Remap caps lock to control
+	(start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
+
+	;; Show battery in doom-modeline
+	(display-battery-mode)
+	(setq doom-modeline-battery t)
+
+	(setq doom-modeline-time t)
+	(setq display-time-mode t)
+	(setq display-time-24hr-format t)
+	(setq display-time-default-load-average nil)
+
+	;; Set screen resolution ( IMPORTANT: run this before (exwm-enable) )
+	;; The command comes from `arandr`
+	(require 'exwm-randr)
+	(exwm-randr-enable)
+	(start-process-shell-command "xrandr" nil "xrandr --output LVDS-1 --primary --mode 1600x900 --pos 0x0 --rotate normal --output VGA-1 --off")
+
+	;; System tray ;; Gives an integer-or-something something error, idk
+	;; (require 'exwm-systemtray)
+	;; (setq exwm-systemtray-height 32)
+	;; (exwm-systemtray-enable)
 
   ;; These keys should always pass through to Emacs
   (setq exwm-input-prefix-keys
@@ -53,7 +93,13 @@
                           (exwm-workspace-switch-create ,i))))
                     (number-sequence 0 9))))
 
-	(exwm-enable)
+	;; Gets called from `emacs --daemon --eval "(exwm-enable)"
+	;; so that exwm does not run when emacs runs as an app
+	;; (exwm-enable)
 )
+
+(use-package exwm-modeline
+  :after (exwm))
+(add-hook 'exwm-init-hook #'exwm-modeline-mode)
 
 (provide 'config-exwm)

@@ -41,6 +41,7 @@ let
 			epkgs.typescript-mode
 
 			epkgs.exwm
+			epkgs.exwm-modeline
 		]
 	));
 	eaf-python-pkgs = python-pkgs: with python-pkgs; [
@@ -79,7 +80,10 @@ in
 		nodePackages.npm
 		nodePackages.typescript
 		nodePackages.typescript-language-server
+
 		xorg.xinit
+		xorg.xmodmap
+		# arandr
 	];
 
 	programs.emacs = {
@@ -143,7 +147,7 @@ in
 
 	# Restart with systemctl --user restart emacs
 	services.emacs = {
-		enable = false;
+		enable = true;
 		package = emacs-wrapped;
 		client.enable = true;
 	};

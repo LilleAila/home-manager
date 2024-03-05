@@ -18,6 +18,8 @@
 
 			nodePackages.neovim
 			python311Packages.pynvim
+
+			gcc
 		];
   };
 
