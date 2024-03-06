@@ -47,7 +47,7 @@
 		nodejs_20
 		python311
 
-		neofetch
+		# neofetch
 		dconf
 
 		webcord-vencord
