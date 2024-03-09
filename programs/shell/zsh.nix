@@ -8,7 +8,30 @@
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      theme = "dst";
+			# https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+			# theme = "dst"; # Good
+			# theme = "awesomepanda";
+			# theme = "bira"; # Weird rendering
+			# theme = "candy";
+			# theme = "clean";
+			# theme = "cloud";
+			# theme = "duellj"; # No git
+			# theme = "fino"; # Bad colors, but has git
+			# theme = "fino-time";
+			# theme = "fox"; # Good
+			# theme = "frontcube";
+			# theme = "gnzh"; # Good
+			# theme = "half-life"; # All on one line
+			# theme = "jispwoso"; # Good
+			# theme = "jonathan"; # Too many lines
+			# theme = "miloshadzic";
+			# theme = "murilasso"; # Good
+			theme = "nanotech"; # Good
+			# theme = "pygmalion";
+			# theme = "rkj-repos"; # Good (empty "<>" on non-git)
+			# theme = "simple";
+			# theme = "xiong-chiamiov"; # Good?
+			# theme = "xiong-chiamiov-plus";
     };
 		initExtra = ''
 			ex = () {
