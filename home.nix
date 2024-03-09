@@ -83,6 +83,14 @@
 		};
 	};
 
+	programs.pidgin = {
+		enable = false;
+		package = pkgs.pidgin;
+		plugins = with pkgs.pidginPackages; [
+			purple-discord
+		];
+	};
+
 	programs.mpv = {
 		enable = true;
 	};

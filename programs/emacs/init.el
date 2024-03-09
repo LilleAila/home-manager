@@ -9,6 +9,7 @@
 (require 'config-completion)
 (require 'config-help)
 (require 'config-bindings)
+(require 'config-org)
 
 (require 'config-lsp)
 

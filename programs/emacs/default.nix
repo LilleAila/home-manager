@@ -40,6 +40,12 @@ let
 			epkgs.evil-nerd-commenter
 			epkgs.typescript-mode
 
+			# === Org-mode ===
+			epkgs.org
+			epkgs.org-bullets
+			epkgs.visual-fill-column
+
+			# === EXWM ===
 			epkgs.exwm
 			epkgs.exwm-modeline
 		]
@@ -59,8 +65,19 @@ let
     markdown
   ];
 	emacs-deps = with pkgs; [
-		( python311.withPackages eaf-python-pkgs )
-		git nodejs wmctrl xdotool aria fd jq
+		# === EAF (does not work) ===
+		# ( python311.withPackages eaf-python-pkgs )
+		# git nodejs wmctrl xdotool aria fd jq
+
+		# === TypeScript ===
+		nodejs
+		nodePackages.npm
+		nodePackages.typescript
+		nodePackages.typescript-language-server
+
+		# xorg.xinit
+		xorg.xmodmap
+		# arandr
 	];
 	emacs-wrapped = inputs.wrapper-manager.lib.build {
 		inherit pkgs;
@@ -74,17 +91,17 @@ let
 in
 {
 	# === TODO: move all deps to emacs-wrapped ===
-	home.packages = with pkgs; [
-		# === TypeScript ===
-		nodejs
-		nodePackages.npm
-		nodePackages.typescript
-		nodePackages.typescript-language-server
-
-		xorg.xinit
-		xorg.xmodmap
-		# arandr
-	];
+	# home.packages = with pkgs; [
+	# 	# === TypeScript ===
+	# 	nodejs
+	# 	nodePackages.npm
+	# 	nodePackages.typescript
+	# 	nodePackages.typescript-language-server
+	#
+	# 	xorg.xinit
+	# 	xorg.xmodmap
+	# 	# arandr
+	# ];
 
 	programs.emacs = {
 		enable = true;
